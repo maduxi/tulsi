@@ -13,9 +13,9 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - $HOME/docker/influxdb/data:/var/lib/influxdb
-      - $HOME/docker/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
-      - $HOME/docker/influxdb/init:/docker-entrypoint-initdb.d
+      - $HOME/tulsi/docker/influxdb/data:/var/lib/influxdb
+      - $HOME/tulsi/docker/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - $HOME/tulsi/docker/influxdb/init:/docker-entrypoint-initdb.d
     environment:
       - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME} # sourced from .env
       - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD} # sourced from .env
@@ -25,7 +25,7 @@ services:
     container_name: telegraf
     networks: [metrics]
     volumes:
-      - $HOME/docker/influxdb/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - $HOME/tulsi/docker/influxdb/telegraf.conf:/etc/telegraf/telegraf.conf:ro
   chronograf:
     container_name: chronograf
     restart: always
