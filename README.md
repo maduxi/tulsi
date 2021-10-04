@@ -56,6 +56,23 @@ sudo pip3 install docker-compose # needs sudo to put it into path correctly
 
 Reference: [link](https://blog.anoff.io/2020-12-install-docker-raspi/).
 
-# Install influxDB with Chronograph
+## Install influxDB with Chronograph
 
 Reference [link](https://blog.anoff.io/2020-12-run-influx-on-raspi-docker-compose/)
+
+## Git
+Install git:
+`sudo apt-get install git`
+
+Clone this repo:
+```shell
+git clone --depth=1 --branch=main git://github.com/maduxi/tulsi.git tulsi
+rm -rf ./tulsi/.git
+```
+
+Run the docker compose:
+```shell
+cd tulsi/docker/compose-files/influxdb
+
+```
+
