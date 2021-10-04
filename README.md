@@ -68,11 +68,12 @@ Clone this repo:
 ```shell
 git clone --depth=1 --branch=main git://github.com/maduxi/tulsi.git tulsi
 rm -rf ./tulsi/.git
+mkdir ~/tulsi/docker/influxdb/data
 ```
 
 Run the docker compose:
 ```shell
-cd tulsi/docker/compose-files/influxdb
-
+cd ~/tulsi/docker/compose-files/influxdb
+docker-compose up -d
 ```
 
