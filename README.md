@@ -77,3 +77,26 @@ cd ~/tulsi/docker/compose-files/influxdb
 docker-compose up -d
 ```
 
+## Import dashboards
+Run this to import the rpi dashboard:
+```shell
+ curl -i -X POST -H "Content-Type: application/json" \
+ http://raspberrypi.local:8888/chronograf/v1/dashboards \
+-d @/Users/madhavacarrillo/Documents/tulsi/dashboards/rpi_dashaboard.json
+```
+
+## Custom metrics on influx db
+
+Install python lib:
+```shell
+pip3 install influxdb-client
+```
+
+Add the tulsi influxdb connection to chronograf. See details on the create-tulsi.iql file.
+
+Random write test:
+```shell
+curl -i -XPOST 'http://localhost:8086/api/v2/write?bucket=tulsi&precision=ns' \
+  --header 'Authorization: Token tulsi:tulsi' \
+  --data-raw 'tulsi-temp value=22'
+```
