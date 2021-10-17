@@ -100,3 +100,6 @@ curl -i -XPOST 'http://localhost:8086/api/v2/write?bucket=tulsi&precision=ns' \
   --header 'Authorization: Token tulsi:tulsi' \
   --data-raw 'tulsi-temp value=22'
 ```
+
+Install the requests module just in case:
+```pip3 install requests```
