@@ -14,11 +14,14 @@ sensor = W1ThermSensor()
 
 def get_temp():
     temp = 0
-    try:
-        temp = sensor.get_temperature(Unit.DEGREES_C)
-    except W1ThermSensorError:
-        # handle ValueError exception
-        pass
+    i = 5
+    while i>0 and temp == 0:
+        try:
+            temp = sensor.get_temperature(Unit.DEGREES_C)
+        except W1ThermSensorError:
+            # handle ValueError exception
+            i-=1
+            time.sleep(1)
     return temp
 
 for _ in itertools.repeat(None, 10):
