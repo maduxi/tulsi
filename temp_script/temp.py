@@ -1,4 +1,6 @@
 import RPi.GPIO as GPIO
+import time
+import itertools
 from w1thermsensor import W1ThermSensor, Unit
 from w1thermsensor.errors import W1ThermSensorError
 
@@ -19,14 +21,15 @@ def get_temp():
         pass
     return temp
 
-
-temperature = get_temp()
-print(f"Temperature: {temperature}")
-if temperature == 0:
-    print("Something went wrong")
-elif temperature<21:
-    print("start heat")
-    GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
-else:
-    print("stop heat")
-    GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
+for _ in itertools.repeat(None, 10):
+    temperature = get_temp()
+    print(f"Temperature: {temperature}")
+    if temperature == 0:
+        print("Something went wrong")
+    elif temperature<21:
+        print("start heat")
+        GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
+    else:
+        print("stop heat")
+        GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
+    time.sleep(5)
