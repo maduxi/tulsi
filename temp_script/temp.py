@@ -5,6 +5,7 @@ from w1thermsensor import W1ThermSensor, Unit
 from w1thermsensor.errors import W1ThermSensorError
 
 GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
+GPIO.setwarnings(False)
 
 RELAIS_1_GPIO = 25
 GPIO.setup(RELAIS_1_GPIO, GPIO.OUT)  # GPIO Assign mode
