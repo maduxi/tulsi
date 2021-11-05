@@ -24,15 +24,13 @@ def get_temp():
             time.sleep(1)
     return temp
 
-for _ in itertools.repeat(None, 10):
-    temperature = get_temp()
-    print(f"Temperature: {temperature}")
-    if temperature == 0:
-        print("Something went wrong")
-    elif temperature<21:
-        print("start heat")
-        GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
-    else:
-        print("stop heat")
-        GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
-    time.sleep(5)
+temperature = get_temp()
+print(f"Temperature: {temperature}")
+if temperature == 0:
+    print("Something went wrong")
+elif temperature<21:
+    print("start heat")
+    GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
+else:
+    print("stop heat")
+    GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
