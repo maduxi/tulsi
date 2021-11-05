@@ -1,14 +1,29 @@
-from random import randrange
-import itertools
-import time
-import requests
+import RPi.GPIO as GPIO
+from w1thermsensor import W1ThermSensor, Unit
 
-url = 'http://localhost:8086/api/v2/write?bucket=tulsi'
-headers = {"Authorization": "Token tulsi:tulsi"}
+GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
 
-for _ in itertools.repeat(None, 10):
-    temp = randrange(30)+5
-    print(temp)
-    data = f'tulsi-temp value={temp}'
-    x = requests.post(url, headers=headers, data=data)
-    time.sleep(5)
+RELAIS_1_GPIO = 25
+GPIO.setup(RELAIS_1_GPIO, GPIO.OUT)  # GPIO Assign mode
+
+sensor = W1ThermSensor()
+
+
+def get_temp():
+    temp = 20
+    try:
+        temp = sensor.get_temperature(Unit.DEGREES_C)
+    except ValueError:
+        # handle ValueError exception
+        pass
+    return temp
+
+
+temperature = get_temp()
+print(f"Temperature: {temperature}")
+if temperature<22:
+    print("start heat")
+    GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
+else:
+    print("stop heat")
+    GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
