@@ -7,7 +7,7 @@ from w1thermsensor.errors import W1ThermSensorError
 GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
 
 RELAIS_1_GPIO = 25
-GPIO.setup(RELAIS_1_GPIO, GPIO.OUT)  # GPIO Assign mode
+GPIO.setup(RELAIS_1_GPIO, GPIO.OUT, initial=1)  # GPIO Assign mode
 
 sensor = W1ThermSensor()
 
@@ -35,3 +35,5 @@ elif temperature < 18:
 else:
     print("stop heat")
     GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
+
+GPIO.cleanup()
