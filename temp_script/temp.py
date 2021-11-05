@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from w1thermsensor import W1ThermSensor, Unit
+from w1thermsensor.errors import W1ThermSensorError
 
 GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
 
@@ -13,7 +14,7 @@ def get_temp():
     temp = 20
     try:
         temp = sensor.get_temperature(Unit.DEGREES_C)
-    except ValueError:
+    except W1ThermSensorError:
         # handle ValueError exception
         pass
     return temp
