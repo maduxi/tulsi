@@ -11,7 +11,7 @@ sensor = W1ThermSensor()
 
 
 def get_temp():
-    temp = 20
+    temp = 0
     try:
         temp = sensor.get_temperature(Unit.DEGREES_C)
     except W1ThermSensorError:
@@ -22,7 +22,9 @@ def get_temp():
 
 temperature = get_temp()
 print(f"Temperature: {temperature}")
-if temperature<22:
+if temperature == 0:
+    print("Something went wrong")
+elif temperature<21:
     print("start heat")
     GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
 else:
