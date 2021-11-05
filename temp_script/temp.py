@@ -29,7 +29,7 @@ temperature = get_temp()
 print(f"Temperature: {temperature}")
 if temperature == 0:
     print("Something went wrong")
-elif temperature < 18:
+elif temperature < 22:
     print("start heat")
     GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
 else:
