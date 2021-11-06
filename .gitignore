@@ -5,3 +5,4 @@
 */.terraform
 */mykey*
 /RPi.GPIO-Cheat-Sheet.pdf
+*/.terraform.lock.hcl
