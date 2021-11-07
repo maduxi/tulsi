@@ -6,7 +6,6 @@ from w1thermsensor.errors import W1ThermSensorError
 import logging
 
 logging.basicConfig(filename='/var/log/tulsi.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
-logging.warning('Starting...')
 
 GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
 GPIO.setwarnings(False)
