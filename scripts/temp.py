@@ -3,6 +3,10 @@ import time
 import itertools
 from w1thermsensor import W1ThermSensor, Unit
 from w1thermsensor.errors import W1ThermSensorError
+import logging
+
+logging.basicConfig(filename='/var/log/tulsi.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.warning('Starting...')
 
 GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
 GPIO.setwarnings(False)
@@ -23,16 +27,19 @@ def get_temp():
             # handle ValueError exception
             i-=1
             time.sleep(1)
+    if i>0:
+        logging.info(f"Got {5-i} false reads")
+    else:
+        logging.error(f"Got too many false reads")
     return temp
 
 
 temperature = get_temp()
-print(f"Temperature: {temperature}")
 if temperature == 0:
-    print("Something went wrong")
+    logging.warning("Something went wrong")
 elif temperature < 18:
-    print("start heat")
+    logging.info(f"Start heat: Temperature: {temperature}.")
     GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
 else:
-    print("stop heat")
+    logging.info(f"Stop heat: Temperature: {temperature}.")
     GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
