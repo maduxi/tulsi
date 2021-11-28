@@ -6,3 +6,6 @@
 */mykey*
 /RPi.GPIO-Cheat-Sheet.pdf
 */.terraform.lock.hcl
+/terraform/certs/*.crt
+/terraform/certs/*.key
+/terraform/certs/*.pem

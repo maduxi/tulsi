@@ -5,3 +5,18 @@ resource "aws_timestreamwrite_database" "tulsi-ts" {
     Name = "tulsi-ts"
   }
 }
+
+
+resource "aws_timestreamwrite_table" "temperature" {
+  database_name = aws_timestreamwrite_database.tulsi-ts.database_name
+  table_name    = "temperature"
+
+  retention_properties {
+    magnetic_store_retention_period_in_days = 180
+    memory_store_retention_period_in_hours  = 8
+  }
+
+  tags = {
+    Name = "tulsi-temperature-table"
+  }
+}

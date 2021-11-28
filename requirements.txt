@@ -1,2 +1,4 @@
 w1thermsensor
 RPi.GPIO
+awscrt
+awsiot
