@@ -10,6 +10,8 @@ logging.basicConfig(filename='/var/log/tulsi.log',
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
+client = "rpib"
+
 GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
 GPIO.setwarnings(False)
 
@@ -50,8 +52,10 @@ else:
 send_message(
     message={
         'temperature': temperature,
-        'status': status
+        'status': status,
+        'client': client,
+        'sensor': 'DS18B20'
     },
-    client_id="tulsi-rpi",
+    client_id=client,
     topic="tulsi/status"
 )
