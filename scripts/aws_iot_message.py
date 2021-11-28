@@ -7,7 +7,7 @@ from uuid import uuid4
 import json
 
 endpoint = "ascvnk0a4teli-ats.iot.eu-west-1.amazonaws.com"
-certs = "~/certs"
+certs = "/home/pi/certs"
 
 event_loop_group = io.EventLoopGroup(1)
 host_resolver = io.DefaultHostResolver(event_loop_group)
