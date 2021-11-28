@@ -51,7 +51,11 @@ def send_message(message, client_id, topic):
         keep_alive_secs=30)
 
     message_json = json.dumps(message)
-    mqtt_connection.connect()
+    connect_future = mqtt_connection.connect()
+
+    # Future.result() waits until a result is available
+    connect_future.result()
+    print("Connected!")
     mqtt_connection.publish(
         topic=topic,
         payload=message_json,
