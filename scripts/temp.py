@@ -4,8 +4,11 @@ import itertools
 from w1thermsensor import W1ThermSensor, Unit
 from w1thermsensor.errors import W1ThermSensorError
 import logging
+from aws_iot_message import send_message
 
-logging.basicConfig(filename='/var/log/tulsi.log', format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(filename='/var/log/tulsi.log',
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
 
 GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
 GPIO.setwarnings(False)
@@ -25,19 +28,30 @@ def get_temp():
         except W1ThermSensorError:
             i -= 1
             time.sleep(1)
-    if i>0:
-        logging.info(f"Got {5-i} false reads")
+    if i > 0:
+        logging.info(f"Got {5 - i} false reads")
     else:
         logging.error(f"Got too many false reads")
     return temp
 
 
 temperature = get_temp()
-if temperature == 0:
-    logging.warning("Something went wrong")
+status = 0
+if temperature <= 0:
+    logging.warning("Something went wrong.")
 elif temperature < 18:
     logging.info(f"Start heat: Temperature: {temperature}.")
     GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
+    status = 1
 else:
     logging.info(f"Stop heat: Temperature: {temperature}.")
     GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
+    status = 0
+send_message(
+    message={
+        'temperature': temperature,
+        'status': status
+    },
+    client_id="tulsi-rpi",
+    topic="tulsi/status"
+)
