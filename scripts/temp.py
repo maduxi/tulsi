@@ -10,7 +10,7 @@ logging.basicConfig(filename='/var/log/tulsi.log',
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
-file_name = './tmp.txt'
+file_name = '/home/pi/tulsi/scripts/tmp.txt'
 
 client = "rpib"
 
