@@ -47,10 +47,10 @@ try:
         for digit in range(4):
             for loop in range(0, 7):
                 GPIO.output(segments[loop], num[s[digit]][loop])
-                # if (int(time.ctime()[18:19])%2 == 0) and (digit == 1):
-                #     GPIO.output(dp, 1)
-                # else:
-                #     GPIO.output(dp, 0)
+                if (digit == 2):
+                    GPIO.output(dp, 1)
+                else:
+                    GPIO.output(dp, 0)
             GPIO.output(digits[digit], 0)
             time.sleep(0.001)
             GPIO.output(digits[digit], 1)
