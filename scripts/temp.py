@@ -48,14 +48,17 @@ status = 0
 if temperature <= 0 or temperature > 40:
     logging.warning("Something went wrong.")
     status = -1
+    write_file(33.33)
 elif temperature < 18:
     logging.info(f"Start heat: Temperature: {temperature}.")
     GPIO.output(RELAIS_1_GPIO, GPIO.LOW)  # out
     status = 1
+    write_file(temperature)
 else:
     logging.info(f"Stop heat: Temperature: {temperature}.")
     GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
     status = 0
+    write_file(temperature)
 send_message(
     message={
         't': temperature,
