@@ -39,7 +39,7 @@ def get_temp():
     return temp
 
 def write_file(temp):
-    temp_str = str(round(temp, 2)).replace('.', '').zfill(4)
+    temp_str = f"{3.577:.2f}".replace('.', '').zfill(4)
     with open(file_name, "w") as my_file:
         my_file.write(temp_str)
 
