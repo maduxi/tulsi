@@ -49,7 +49,6 @@ def read_temp():
 try:
     while True:
         n = read_temp()
-        print(n)
         s = str(n).rjust(4)[::-1]
         # print(s)
         for digit in range(4):
