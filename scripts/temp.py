@@ -10,6 +10,8 @@ logging.basicConfig(filename='/var/log/tulsi.log',
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
+file_name = 'tmp.txt'
+
 client = "rpib"
 
 GPIO.setmode(GPIO.BCM)  # GPIO Numbers instead of board numbers
@@ -36,6 +38,10 @@ def get_temp():
         logging.error(f"Got too many false reads")
     return temp
 
+def write_file(temp):
+    temp_str = str(round(temp, 2)).zfill(5)
+    with open(file_name, "w") as my_file:
+        my_file.write(temp_str)
 
 temperature = get_temp()
 status = 0
