@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+from temp import file_name
 
 GPIO.setmode(GPIO.BCM)
 
@@ -39,9 +40,15 @@ num = {' ': (0, 0, 0, 0, 0, 0, 0),
        '8': (1, 1, 1, 1, 1, 1, 1),
        '9': (1, 1, 1, 1, 0, 1, 1)}
 
+
+def read_temp():
+    with open(file_name) as f:
+        first_line = f.readline()
+    return first_line
+
 try:
     while True:
-        n = time.ctime()[11:13] + time.ctime()[14:16]
+        n = read_temp
         s = str(n).rjust(4)[::-1]
         # print(s)
         for digit in range(4):
