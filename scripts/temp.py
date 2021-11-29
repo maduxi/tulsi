@@ -52,10 +52,9 @@ else:
     status = 0
 send_message(
     message={
-        'temperature': temperature,
-        'status': status,
-        'client': client,
-        'sensor': 'DS18B20'
+        't': temperature,
+        's': status,
+        'c': client
     },
     client_id=client,
     topic="tulsi/status"

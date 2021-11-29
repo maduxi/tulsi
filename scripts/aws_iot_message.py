@@ -55,7 +55,6 @@ def send_message(message, client_id, topic):
 
     # Future.result() waits until a result is available
     connect_future.result()
-    print("Connected!")
     mqtt_connection.publish(
         topic=topic,
         payload=message_json,
