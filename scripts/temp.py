@@ -5,6 +5,7 @@ from w1thermsensor import W1ThermSensor, Unit
 from w1thermsensor.errors import W1ThermSensorError
 import logging
 from aws_iot_message import send_message
+import datetime
 
 logging.basicConfig(filename='/var/log/tulsi.log',
                     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -59,12 +60,16 @@ else:
     GPIO.output(RELAIS_1_GPIO, GPIO.HIGH)  # on
     status = 0
     write_file(temperature)
-send_message(
-    message={
-        't': temperature,
-        's': status,
-        'c': client
-    },
-    client_id=client,
-    topic="tulsi/status"
-)
+
+#Publish only every 5 minutes
+if (datetime.datetime.now().minute % 5) == 0:
+    send_message(
+        message={
+            't': temperature,
+            's': status,
+            'c': client,
+            'ts': int(time.time())
+        },
+        client_id=client,
+        topic="tulsi/status"
+    )
