@@ -9,3 +9,4 @@
 /terraform/certs/*.crt
 /terraform/certs/*.key
 /terraform/certs/*.pem
+/esp32/iot-sensor/secrets.h
