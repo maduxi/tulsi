@@ -1,10 +1,8 @@
-from awscrt import io, mqtt, auth, http
-from awsiot import mqtt_connection_builder
-import sys
-import threading
-import time
-from uuid import uuid4
 import json
+import sys
+
+from awscrt import io, mqtt
+from awsiot import mqtt_connection_builder
 
 endpoint = "ascvnk0a4teli-ats.iot.eu-west-1.amazonaws.com"
 certs = "/home/pi/certs"

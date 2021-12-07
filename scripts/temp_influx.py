@@ -1,6 +1,7 @@
-from random import randrange
 import itertools
 import time
+from random import randrange
+
 import requests
 
 url = 'http://localhost:8086/api/v2/write?bucket=tulsi'

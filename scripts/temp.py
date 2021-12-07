@@ -1,11 +1,12 @@
-import RPi.GPIO as GPIO
+import datetime
+import logging
 import time
-import itertools
+
+import RPi.GPIO as GPIO
 from w1thermsensor import W1ThermSensor, Unit
 from w1thermsensor.errors import W1ThermSensorError
-import logging
+
 from aws_iot_message import send_message
-import datetime
 
 logging.basicConfig(filename='/var/log/tulsi.log',
                     format='%(asctime)s - %(levelname)s - %(message)s',
