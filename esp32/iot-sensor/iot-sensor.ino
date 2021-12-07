@@ -166,10 +166,16 @@ void publishMessage()
   doc["ts"] = epoch_time;
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
-
+  if(!client.connected()){
+    connectAWS();
+  }
   client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
-  Serial.println("Message sent");
+  bool result = client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+  Serial.print("Message: ");
   Serial.println(jsonBuffer);
+  Serial.print("Status: ");
+  Serial.println(result);
+
 }
 
 long getTime(){
