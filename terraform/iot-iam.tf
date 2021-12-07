@@ -45,7 +45,12 @@ resource "aws_iot_policy_attachment" "att" {
   target = aws_iot_certificate.iot_certificate.arn
 }
 
-resource "aws_iot_thing_principal_attachment" "att" {
+resource "aws_iot_thing_principal_attachment" "att-rpi" {
   principal = aws_iot_certificate.iot_certificate.arn
   thing     = aws_iot_thing.tulsi-rpi.name
+}
+
+resource "aws_iot_thing_principal_attachment" "att-studio-esp32" {
+  principal = aws_iot_certificate.iot_certificate.arn
+  thing     = aws_iot_thing.studio-esp32.name
 }

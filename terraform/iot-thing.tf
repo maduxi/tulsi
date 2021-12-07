@@ -1,7 +1,7 @@
 resource "aws_iot_thing" "tulsi-rpi" {
   name = "tulsi-rpi"
+}
 
-  attributes = {
-    First = "examplevalue"
-  }
+resource "aws_iot_thing" "studio-esp32" {
+  name = "studio-esp32"
 }
