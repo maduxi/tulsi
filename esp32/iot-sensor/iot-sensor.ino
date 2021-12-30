@@ -37,28 +37,26 @@ MQTTClient client = MQTTClient(256);
  
 void  setup () {
   lcdSetup();
+  getAndPrintTemp();
   // Initialize Serial Monitor
   Serial.begin(115200);
   //Connect to wifi
   wifiSetup();
   connectAWS();
   // Initialize a NTPClient to get time
-  timeClient.begin();
-  timeClient.setUpdateInterval(300000);
+//  timeClient.begin();
+//  timeClient.setUpdateInterval(300000);
   pinMode(BUTTON,INPUT);
 }
  
 void  loop () {
   if(last_temp+30000 < millis()){ //Check temp every 30s
-    temp = getTemp();
-    lcd.clear();
-    lcd.print(temp);
-    lcd.print(" C");
+    getAndPrintTemp();
     last_temp = millis();
   }
-  epoch_time = getTime();
-  lcd.setCursor (0, 1); 
-  lcd.print (epoch_time);
+//  epoch_time = getTime();
+//  lcd.setCursor (0, 1); 
+//  lcd.print (epoch_time);
 
   if(digitalRead(BUTTON) == HIGH){
     last_button_press = millis();
@@ -72,6 +70,13 @@ void  loop () {
     publishMessage();
     last_mqtt_sent = millis();
   }
+}
+
+void getAndPrintTemp() {
+  temp = getTemp();
+  lcd.setCursor (0, 1);
+  lcd.print(temp);
+  lcd.print(" C");
 }
 
 float getTemp()
@@ -136,6 +141,10 @@ void wifiSetup(){
 
 void connectAWS()
 {
+  if(WiFi.status() != WL_CONNECTED) {
+    Serial.println("Wifi disconnected. Connecting"); 
+    wifiSetup();
+  }
   // Configure WiFiClientSecure to use the AWS IoT device credentials
   net.setCACert(AWS_CERT_CA);
   net.setCertificate(AWS_CERT_CRT);
@@ -144,10 +153,15 @@ void connectAWS()
   client.begin(AWS_IOT_ENDPOINT, 8883, net);
 
   Serial.print("Connecting to AWS IOT");
-
+  int i = 0;
   while (!client.connect(THINGNAME)) {
     Serial.print(".");
     delay(1000);
+    i++;
+    if(i>=15) {
+      Serial.print("Cannot connect to AWS IoT. Rebooting.");
+      ESP.restart();
+    }
   }
   if(!client.connected()){
     Serial.println("AWS IoT Timeout!");
