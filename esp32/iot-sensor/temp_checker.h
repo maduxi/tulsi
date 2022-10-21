@@ -4,16 +4,17 @@
 
 // Pin donde se conecta el bus 1-Wire
 const int pin_temp = 25;
-const int D1 = 12;
-const int D2 = 14;
-const int D3 = 26;
-const int D4 = 27;
-const int clockPin = 13;
+const int D1 = 0;
+const int D2 = 4;
+const int D3 = 17;
+const int D4 = 16;
+const int clockPin = 2;
 const int latchPin = 32;
 const int dataPin = 33;
 const long tempInterval = 10000;
 const long lcdInterval = 6;
 const int warm_pin = 15;
+const int tooCold = 27;
 
  
 // Instancia a las clases OneWire y DallasTemperature
@@ -49,10 +50,7 @@ void setup() {
   pinMode(clockPin, OUTPUT);
   pinMode(latchPin, OUTPUT);
   pinMode(dataPin, OUTPUT);
-  digitalWrite(D4, HIGH);
-  digitalWrite(D3, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D1, HIGH);
+  screenOff();
   digitalWrite(warm_pin, LOW);
 }
 
@@ -60,7 +58,7 @@ void loop() {
   unsigned long currentMillis = millis();
   updateTemp(currentMillis);
   displayTemp(temp);
-  if(temp>27){
+  if(temp>tooCold){
     digitalWrite(warm_pin, LOW);
   }else{
     digitalWrite(warm_pin, HIGH);
