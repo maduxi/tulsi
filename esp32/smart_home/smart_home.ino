@@ -35,7 +35,11 @@ int num2 = 0;
 int num3 = 0;
 int num4 = 0; 
 
-byte table[10] {B11111100, B01100000, B11011010, B11110010, B01100110, B10110110, B10111110, B11100000, B11111110, B11110110};
+byte table[10] {B00000011, B10011111, B00100101, B00001101, B10011001, B01001001, B01000001, B00011111, B00000001, B00001001};
+
+//byte table[10] {B11111100, B01100000, B00000001, B11110010, B01100110, B10110110, B10111110, B11100000, B11111110, B11110110};
+
+int tabled[10] {3,159,37,13,153,73,65,31,1,9};
 
 void setup() {
   // Iniciamos la comunicación serie
@@ -84,9 +88,11 @@ void updateTemp(unsigned long currentMillis){
   }
   if(currentMillis > whenCheck+1000){
     temp = sensorDS1820.getTempCByIndex(0);
-    if(temp>40 || temp < 3) {
+    
+    if(temp>50 || temp < 3) {
       temp = 33.33; 
     }
+    
     Serial.print("Temp: ");
     Serial.println(temp);
     int t = long(temp*100);
@@ -111,12 +117,12 @@ void separate(long num) {
 void Display() {
   screenOff(); 
   digitalWrite(latchPin, LOW);
-  byte wr = table[numbers[count]]; 
+  int wr = tabled[numbers[count]]; 
   if (count==1) {
-    bitSet(wr, 0);
+    wr = wr-1;
   }
   shiftOut(dataPin, clockPin, LSBFIRST, wr); 
-  digitalWrite(cathodePins[count], LOW); 
+  digitalWrite(cathodePins[count], HIGH); 
   digitalWrite(latchPin, HIGH); 
   count++; 
   if (count == 4) { 
@@ -125,8 +131,8 @@ void Display() {
 }
 
 void screenOff() { 
-  digitalWrite(D4, HIGH);
-  digitalWrite(D3, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D1, HIGH);
+  digitalWrite(D4, LOW);
+  digitalWrite(D3, LOW);
+  digitalWrite(D2, LOW);
+  digitalWrite(D1, LOW);
 }
